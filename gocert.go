@@ -16,18 +16,28 @@ import (
 
 )
 
+func Bold(str string) string {
+    return "\033[1m" + str + "\033[0m"
+}
+
+func BoldPrintf(str string) {
+	fmt.Printf(Bold(str))
+}
+
 func printPkix(pkixName pkix.Name) {
 	fmt.Printf("%s - %s\n", pkixName.CommonName, pkixName.Organization)
 }
 
 func print_cert(cert *x509.Certificate) {
-	fmt.Printf("CommonName: ")
+	BoldPrintf(Bold("CommonName: "))
 	printPkix(cert.Subject)
-	fmt.Printf("Issuer: ")
+	BoldPrintf("Issuer: ")
 	printPkix(cert.Issuer)
-	fmt.Printf("Alt Names: %s\n", cert.DNSNames)
+	BoldPrintf("Alt Names: ")
+	fmt.Printf("%s\n", cert.DNSNames)
 	timeDifference := cert.NotAfter.Sub(time.Now())
-	fmt.Printf("Expires in: %v days\n", math.Floor(timeDifference.Hours()/24))
+	BoldPrintf("Expires in: ")
+	fmt.Printf("%v days\n", math.Floor(timeDifference.Hours()/24))
 	fmt.Printf("Version: %v ; Serial: %s\n", cert.Version, cert.SerialNumber)
 	fmt.Printf("BasicConstraintsValid: %v ; IsCA: %v ; MaxPathLen: %v\n", 
 				cert.BasicConstraintsValid, cert.IsCA, cert.MaxPathLen)
@@ -67,6 +77,7 @@ func main() {
 
 	client := tls.Client(conn, &config)
 	err = client.Handshake()
+
 	if err != nil {
 		log.Fatal(err)
 	}
