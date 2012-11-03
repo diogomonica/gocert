@@ -52,7 +52,7 @@ func save_cert(cert *x509.Certificate) {
 }
 
 func usage() {
-    fmt.Fprintf(os.Stderr, "usage: %s [-s] [-c] hostname:port\n", os.Args[0])
+    fmt.Fprintf(os.Stderr, "usage: %s [-save] [-chain] hostname:port\n", os.Args[0])
     flag.PrintDefaults()
     os.Exit(2)
 }

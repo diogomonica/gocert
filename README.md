@@ -18,7 +18,7 @@ A small go program to print details on X509 certificates and safe them in .pem f
 
 # Usage
 
-	usage: gocert [-s] [-c] hostname:port
+	usage: gocert [-save] [-chain] hostname:port
 	  -chain=false: Print details about all the certificates on the chain
 	  -save=false: Save the PEM to the local disk in the format of #{CN}.pem
 
