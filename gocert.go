@@ -16,6 +16,22 @@ import (
 
 )
 
+var signatureAlgorithms = map[uint]string{
+  0 : "UnknownSignatureAlgorithm",
+  1 : "MD2WithRSA",
+  2 : "MD5WithRSA",
+  3 : "SHA1WithRSA",
+  4 : "SHA256WithRSA",
+  5 : "SHA384WithRSA",
+  6 : "SHA512WithRSA",
+  7 : "DSAWithSHA1",
+  8 : "DSAWithSHA256",
+  9 : "ECDSAWithSHA1",
+  10 : "ECDSAWithSHA256",
+  11 : "ECDSAWithSHA384",
+  12 : "ECDSAWithSHA512",
+}
+
 func Bold(str string) string {
       return "\033[1m" + str + "\033[0m"
 }
@@ -40,7 +56,8 @@ func print_cert(cert *x509.Certificate) {
     fmt.Printf("%v days\n", math.Floor(timeDifference.Hours()/24))
     fmt.Printf("Version: %v ; Serial: %s\n", cert.Version, cert.SerialNumber)
     fmt.Printf("BasicConstraintsValid: %v ; IsCA: %v ; MaxPathLen: %v\n",
-                cert.BasicConstraintsValid, cert.IsCA, cert.MaxPathLen)
+                cert.BasicConstraintsValid, cert.IsCA, cert.MaxPathLen )
+    fmt.Printf("Signature Algorithm: %v\n", signatureAlgorithms[uint(cert.SignatureAlgorithm)])
 }
 
 func save_cert(cert *x509.Certificate) {
